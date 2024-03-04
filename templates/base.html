@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SynTalk{% endblock %}</title>
+    <style>
+        header {
+            background-color: #181818; 
+            padding: 10px; 
+            margin: 0; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%;
+        }
+        body {
+            background-color: #2B2B2B;
+            color: white;
+            font-family: 'Cascadia Code', monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SynTalk</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Andrew Mason</p>
+    </footer>
+</body>
+</html>
+
+</html>
