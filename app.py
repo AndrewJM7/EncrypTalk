@@ -2,6 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+from main.views import main_blueprint
+from users.views import users_blueprint
+
+app.register_blueprint(main_blueprint)
+app.register_blueprint(users_blueprint)
+
 @app.route('/')
 def index():
     return render_template('main/index.html')

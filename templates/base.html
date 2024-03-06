@@ -38,11 +38,13 @@
 </head>
 <body>
     <header>
-        <h1>EncrypTalk <img src="static/logo.png" alt="Logo" height="200" class="logo"></h1>
+        <h1>EncrypTalk</h1>
+        <a href="{{ url_for('index') }}">
+            <img src="static/logo.png" alt="Logo" height="200" class="logo" style="margin-top: 10px;">
+        </a>
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Login</a>
-            <a href="#">Register</a>
+            <a href="{{ url_for('users.login') }}">Login</a>
+            <a href="{{ url_for('users.register') }}">Register</a>
         </nav>
     </header>
     
