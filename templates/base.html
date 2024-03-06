@@ -3,38 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SynTalk{% endblock %}</title>
+    <title>{% block title %}EncrypTalk{% endblock %}</title>
     <style>
-        header {
-            background-color: #181818; 
-            padding: 10px; 
-            margin: 0; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%;
-        }
         body {
+            font-family: 'Cascadia Code', sans-serif;
             background-color: #2B2B2B;
-            color: white;
-            font-family: 'Cascadia Code', monospace;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #181818;
+            height: 80px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 20px;
+        }
+        .logo {
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>SynTalk</h1>
+        <h1>EncrypTalk <img src="static/logo.png" alt="Logo" height="200" class="logo"></h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </nav>
     </header>
-
-    <main>
+    
+    <div class="content">
         {% block content %}
         {% endblock %}
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Andrew Mason</p>
-    </footer>
+    </div>
 </body>
-</html>
-
 </html>

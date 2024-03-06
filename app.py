@@ -3,8 +3,8 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 @app.route('/')
-def login():
-    return render_template('users/login.html')
+def index():
+    return render_template('main/index.html')
 
 # Bad request
 @app.errorhandler(400)
