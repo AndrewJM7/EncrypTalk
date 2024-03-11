@@ -10,3 +10,8 @@ def login():
 @users_blueprint.route('/register')
 def register():
     return render_template('users/register.html')
+
+
+@users_blueprint.route('/profile')
+def profile():
+    return render_template('users/profile.html')
