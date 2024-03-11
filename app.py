@@ -1,6 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
+# CONFIGURATION
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://ajmason:InfAndy11@localhost:3306/encryptalk_db'
+app.config['SQLALCHEMY_ECHO'] = True
+
+# Initialise database
+db = SQLAlchemy(app)
 
 from main.views import main_blueprint
 from users.views import users_blueprint
