@@ -18,7 +18,7 @@ class User(db.Model):
         self.email = email
         self.firstname = firstname
         self.lastname = lastname
-        self.username = phone
+        self.username = username
         # hashing a password and using salt for more protection
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 

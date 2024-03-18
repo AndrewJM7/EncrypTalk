@@ -1,10 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 # CONFIGURATION
 app = Flask(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://ajmason:InfAndy11@localhost:3306/encryptalk_db'
 app.config['SQLALCHEMY_ECHO'] = True
+# Generate a random secret key
+secret_key = os.urandom(24)
+app.config['SECRET_KEY'] = secret_key
 
 # Initialise database
 db = SQLAlchemy(app)
