@@ -1,5 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1> Login </h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="column is-5 is-offset-4" style="display: flex; justify-content: center; align-items: center; height: 80vh;">
+        <div class="box" style="padding: 20px; text-align: center;">
+            <form method="POST">
+                <div class="field" style="margin-bottom: 10px;">
+                    <h3 style="font-size: 2.5rem;">LOGIN</h3>
+                    {{ form.csrf_token() }}
+                    <div class="control">
+                        {{ form.email(class="input", placeholder="Email", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {% for error in form.email.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field" style="margin-bottom: 10px;">
+                    <div class="control">
+                        {{ form.password(class="input", placeholder="Password", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {% for error in form.password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <div class="control" style="display: flex; justify-content: center;">
+                        {{ form.recaptcha }}
+                        {% for error in form.recaptcha.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    {{ form.submit(class="button is-info is-centered", style="width: 80%; margin: 0 auto; padding: 8px; font-size: 1.2rem; margin-top: 10px") }}
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

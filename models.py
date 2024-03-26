@@ -7,20 +7,23 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # User authentication information.
     email = db.Column(db.String(100), nullable=False, unique=True)
-    username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     # User information
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
-    # logging the date and time of all user registration
-
-    def __init__(self, email, firstname, lastname, username, password, role):
+    
+    def __init__(self, email, firstname, lastname, password):
         self.email = email
         self.firstname = firstname
         self.lastname = lastname
-        self.username = username
-        # hashing a password and using salt for more protection
+        # hashing password and using salt for more protection
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        
+    def is_active(self):
+        return True
+    
+    def get_id(self):
+        return (self.id)
 
 
 def init_db():

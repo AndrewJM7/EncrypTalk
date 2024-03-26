@@ -15,7 +15,7 @@ def character_check(form, field):
 def validate_password(form, password):
     p = re.compile(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)")
     if not p.match(password.data):
-        raise ValidationError("Must contain at least 1 digit, 1 lowercase word character, 1 uppercase word character and 1 special character ")
+        raise ValidationError("Must contain at least 1 digit, 1 lowercase character, 1 uppercase character and 1 special character ")
         
 class RegisterForm(FlaskForm):
     email = StringField(validators=[DataRequired(), Email()])
@@ -31,4 +31,5 @@ class LoginForm(FlaskForm):
     email = StringField(validators=[DataRequired()])
     password = PasswordField(validators=[DataRequired()])
     recaptcha = RecaptchaField()
+    
     submit = SubmitField()

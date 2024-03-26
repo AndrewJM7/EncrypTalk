@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -7,12 +8,31 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://ajmason:InfAndy11@localhost:3306/encryptalk_db'
 app.config['SQLALCHEMY_ECHO'] = True
+
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
+
 # Generate a random secret key
 secret_key = os.urandom(24)
 app.config['SECRET_KEY'] = secret_key
 
 # Initialise database
 db = SQLAlchemy(app)
+
+# Implementing a login manager
+login_manager = LoginManager()
+# Set for redirecting anonymous users trying to access protected area
+login_manager.login_view = 'users.login'
+# Registering the login manager with the application instance
+login_manager.init_app(app)
+
+from models import User
+
+
+# The function queries the 'User' table for user with given id
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 from main.views import main_blueprint
 from users.views import users_blueprint
