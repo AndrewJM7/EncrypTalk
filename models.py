@@ -1,3 +1,4 @@
+from email.policy import default
 from app import db, app
 import bcrypt
 

@@ -4,8 +4,7 @@ import bcrypt
 from flask import Blueprint, render_template, redirect, url_for, flash
 from app import db
 from models import User
-from flask_login import login_user
-from datetime import datetime
+from flask_login import login_user, logout_user, login_required, current_user
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
 
@@ -26,7 +25,7 @@ def login():
         db.session.add(user)
         db.session.commit()
         
-        return redirect(url_for('main.index'))
+        return redirect(url_for('messages.messages'))
         
     return render_template('users/login.html', form=form)
 
@@ -37,8 +36,8 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        
         user = User.query.filter_by(email=form.email.data).first()
-        username = User.query.filter_by(username=form.username.data).first()
 
         if user:
             flash('Email address already exists')
@@ -48,8 +47,7 @@ def register():
         new_user = User(email=form.email.data,
                         firstname=form.firstname.data,
                         lastname=form.lastname.data,
-                        password=form.password.data,
-                        role='user')
+                        password=form.password.data)
 
         # add the new user to the database
         db.session.add(new_user)
@@ -58,3 +56,10 @@ def register():
         return redirect(url_for('users.login'))
 
     return render_template('users/register.html', form=form)
+
+
+@users_blueprint.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
