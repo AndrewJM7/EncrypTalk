@@ -9,3 +9,5 @@ mysql-connector-python
 mysqlclient
 flask_login
 Flask-Reuploaded
+flask-socketio
+flask-cors
