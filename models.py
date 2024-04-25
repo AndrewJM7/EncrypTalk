@@ -1,8 +1,9 @@
 from email.policy import default
 from app import db, app
 import bcrypt
+from flask_login import UserMixin
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)

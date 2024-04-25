@@ -1,7 +1,5 @@
-import socket
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-from flask_socketio import SocketIO,emit
-from flask_cors import CORS
+from flask import Flask, render_template, request, redirect, url_for
+from flask_socketio import SocketIO, emit
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -19,9 +17,9 @@ app.config['RECAPTCHA_PRIVATE_KEY'] = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 secret_key = os.urandom(24)
 app.config['SECRET_KEY'] = secret_key
 
-# SocketIO instance
-CORS(app, resiurces={r"/*": {"origins": "*"}})
-socketio = SocketIO(app, cors_allowed_origins="*")
+# Initialise socketio
+socketio = SocketIO(app)
+socketio.init_app(app)
 
 # Initialise database
 db = SQLAlchemy(app)
@@ -70,37 +68,6 @@ def not_found_error(error):
 @app.errorhandler(500)
 def internal_server_error(error):
     return render_template('errors/500.html'), 500
-
-
-# Server is not ready to handle the request
-@app.errorhandler(503)
-def service_unavailable_error(error):
-    return render_template('errors/503.html'), 503
-
-@app.route("/http-call")
-def http_call():
-    """return JSON with string data as the value"""
-    data = {'data':'This text was fetched using an HTTP call to server on render'}
-    return jsonify(data)
-
-@socketio.on("connect")
-def connected():
-    """event listener when client connects to the server"""
-    print(request.sid)
-    print("client has connected")
-    emit("connect",{"data":f"id: {request.sid} is connected"})
-
-@socketio.on('data')
-def handle_message(data):
-    """event listener when client types a message"""
-    print("data from the front end: ",str(data))
-    emit("data",{'data':data,'id':request.sid},broadcast=True)
-
-@socketio.on("disconnect")
-def disconnected():
-    """event listener when client disconnects to the server"""
-    print("user disconnected")
-    emit("disconnect",f"user {request.sid} disconnected",broadcast=True)
-
+    
 if __name__ == "__main__":
-    socketio.run(app, debug=True, port=5001)
+    app.run(debug=True)
