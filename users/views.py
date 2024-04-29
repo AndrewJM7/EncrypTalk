@@ -25,7 +25,7 @@ def login():
         db.session.add(user)
         db.session.commit()
         
-        return redirect(url_for('messages.messages'))
+        return redirect(url_for('messages.rooms'))
         
     return render_template('users/login.html', form=form)
 

@@ -19,7 +19,6 @@ app.config['SECRET_KEY'] = secret_key
 
 # Initialise socketio
 socketio = SocketIO(app)
-socketio.init_app(app)
 
 # Initialise database
 db = SQLAlchemy(app)
@@ -70,4 +69,4 @@ def internal_server_error(error):
     return render_template('errors/500.html'), 500
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app)
