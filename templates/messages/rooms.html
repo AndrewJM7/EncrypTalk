@@ -1,4 +1,79 @@
 {% extends "base.html" %}
-{% block content %}
 
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        margin-top: 30px;
+        align-items: flex-start; 
+    }
+
+    .friends-list {
+        margin-left: 30px; 
+        background-color: #181818; 
+        padding: 20px; 
+        border-radius: 20px; 
+        box-shadow: 0 0 10px white; 
+        height: 75vh;
+        margin-right: 50px; 
+        width: 30%;
+    }
+
+    .chat-container {
+        background-color: #181818; 
+        padding: 20px; 
+        border-radius: 20px; 
+        box-shadow: 0 0 10px white; 
+        height: 75vh;
+        margin-left: 50px; 
+        margin-right: 50px; 
+        width: 100%;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 15px;
+        font-size: 30px;
+        color: white;
+    }
+
+    li:before {
+        content: "-"; 
+        margin-right: 10px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        font-size: 40px;
+        text-decoration: underline;
+    }
+
+    .chat-title {
+        font-size: 30px;
+        color: white;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="friends-list">
+        <h2>Messages</h2>
+        <ul>
+            {% for friend in friends %}
+            <li>{{ friend.firstname }} {{ friend.lastname }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="chat-container">
+        <h2>Chat</h2>
+
+    </div>
+</div>
 {% endblock %}
