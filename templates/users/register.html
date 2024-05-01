@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <style>
+        .input-field {
+            width: 90%;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        .help.is-danger {
+            color: #ff3860; /* Adjust color as needed */
+        }
+    </style>
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="notification is-danger">
@@ -15,7 +27,7 @@
                     <h3 style="font-size: 2.5rem;">REGISTER</h3>
                     {{ form.csrf_token() }}
                     <div class="control">
-                        {{ form.email(class="input", placeholder="Email", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {{ form.email(class="input-field", placeholder="Email") }}
                         {% for error in form.email.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
@@ -23,7 +35,7 @@
                 </div>
                 <div class="field" style="margin-bottom: 10px;">
                     <div class="control">
-                        {{ form.firstname(class="input", placeholder="First Name", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {{ form.firstname(class="input-field", placeholder="First Name") }}
                         {% for error in form.firstname.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
@@ -31,7 +43,7 @@
                 </div>
                 <div class="field" style="margin-bottom: 10px;">
                     <div class="control">
-                        {{ form.lastname(class="input", placeholder="Last Name", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {{ form.lastname(class="input-field", placeholder="Last Name") }}
                         {% for error in form.lastname.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
@@ -39,7 +51,7 @@
                 </div>
                 <div class="field" style="margin-bottom: 10px;">
                     <div class="control">
-                        {{ form.password(class="input", placeholder="Password", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {{ form.password(class="input-field", placeholder="Password") }}
                         {% for error in form.password.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
@@ -47,7 +59,7 @@
                 </div>
                 <div class="field" style="margin-bottom: 10px;">
                     <div class="control">
-                        {{ form.confirm_password(class="input", placeholder="Confirm Password", style="width: 90%; padding: 10px; font-size: 1.2rem;") }}
+                        {{ form.confirm_password(class="input-field", placeholder="Confirm Password") }}
                         {% for error in form.confirm_password.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
