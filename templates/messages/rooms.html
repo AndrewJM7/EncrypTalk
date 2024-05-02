@@ -2,6 +2,12 @@
 
 {% block content %}
 <style>
+    .title {
+        font-size: 30px;
+        margin-top: 30px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
     .container {
         display: flex;
         margin-top: 30px;
@@ -9,36 +15,27 @@
     }
 
     .friends-list {
-        margin-left: 30px; 
+        margin-left: 600px; 
         background-color: #181818; 
         padding: 20px; 
         border-radius: 20px; 
         box-shadow: 0 0 10px white; 
-        height: 75vh;
-        margin-right: 50px; 
-        width: 30%;
-    }
-
-    .chat-container {
-        background-color: #181818; 
-        padding: 20px; 
-        border-radius: 20px; 
-        box-shadow: 0 0 10px white; 
-        height: 75vh;
-        margin-left: 50px; 
-        margin-right: 50px; 
+        height: 60vh;
+        margin-right: 600px; 
         width: 100%;
     }
 
     ul {
         list-style-type: none;
         padding: 0;
+        text-align: center;
     }
 
     li {
         margin-bottom: 15px;
         font-size: 30px;
         color: white;
+        text-align: left; 
     }
 
     li:before {
@@ -54,26 +51,22 @@
         text-decoration: underline;
     }
 
-    .chat-title {
-        font-size: 30px;
-        color: white;
-        margin-bottom: 20px;
+    .friends-list li a {
+        color: white; 
+        text-decoration: none; 
     }
 </style>
 
+<div class="title">MESSAGES</div>
+
 <div class="container">
     <div class="friends-list">
-        <h2>Messages</h2>
+        <h2>Join Chat</h2>
         <ul>
             {% for friend in friends %}
-            <li>{{ friend.firstname }} {{ friend.lastname }}</li>
+            <li><a href="/chat/{{ friend.email }}">{{ friend.firstname }} {{ friend.lastname }}</a></li>
             {% endfor %}
         </ul>
-    </div>
-
-    <div class="chat-container">
-        <h2>Chat</h2>
-
     </div>
 </div>
 {% endblock %}

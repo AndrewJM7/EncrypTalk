@@ -33,7 +33,7 @@ def contacts():
     users = [user for user in users if user.email not in friend_emails]
     return render_template('contacts/contacts.html', users=users, friends=friends)
 
-
+# Add a friend to the current user's friends list
 @contacts_blueprint.route('/add_friend/<email>')
 @login_required
 def add_friend(email):
@@ -64,7 +64,7 @@ def add_friend(email):
         flash('User not found or already a friend!', 'error') 
         return redirect(url_for('contacts.contacts')) 
 
-    
+# Delete a friend from the current user's friends list
 @contacts_blueprint.route('/delete_friend/<email>')
 @login_required
 def delete_friend(email):
