@@ -64,7 +64,9 @@
         <h2>Join Chat</h2>
         <ul>
             {% for friend in friends %}
-            <li><a href="/chat/{{ friend.email }}">{{ friend.firstname }} {{ friend.lastname }}</a></li>
+                {% if current_user.email in friend.friends.split(',') %}
+                    <li><a href="/chat/{{ friend.email }}">{{ friend.firstname }} {{ friend.lastname }}</a></li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

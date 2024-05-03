@@ -10,18 +10,22 @@
     }
     .container {
         display: flex;
+        flex-direction: column; 
+        align-items: flex-start;
         margin-top: 30px;
-        align-items: flex-start; 
     }
     .chat-box {
-        margin-left: 30px; 
-        background-color: #181818; 
-        padding: 20px; 
-        border-radius: 20px; 
-        box-shadow: 0 0 10px white; 
-        height: 60vh;
-        margin-right: 30px; 
-        width: 100%;
+        list-style: none;
+        background-color: #181818;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 10px white;
+        height: 55vh;
+        width: 77%;
+        overflow-y: auto; 
+        margin-left: 200px;
+        margin-right: 200px;
+        font-size: 20px;
     }
     h2 {
         text-align: center;
@@ -30,13 +34,62 @@
         font-size: 40px;
         text-decoration: underline;
     }
+    input {
+        width: calc(100% - 80px); 
+        font-size: 1.2rem;
+        margin-left: 200px;
+    }
+    button {
+        width: 80px; 
+        padding: 8px;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        margin-left: 200px;
+    }
+    .form-container {
+        display: flex;
+        justify-content: flex-end; 
+        margin-top: 10px; 
+    }
 </style>
 
 <div class="title">CHAT</div>
 
 <div class="container">
-    <div class="chat-box">
-        <h2>{{ friend.firstname }} {{ friend.lastname }}</h2>
+    <div class="chat-box" id="message-list">
+        <!-- Messages will be appended here -->
+    </div>
+    <div class="form-container">
+        <form id="message-form">
+            <input type="text" id="message-input" autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Listen for messages from the server
+        socket.on('message', function (data) {
+            var messageList = document.getElementById('message-list');
+            var li = document.createElement('li');
+            li.innerHTML = data.message;
+            messageList.appendChild(li); // Append messages at the end
+        });
+
+        // Handle form submission to send messages
+        var form = document.getElementById('message-form');
+        form.onsubmit = function (e) {
+            e.preventDefault();
+            var input = document.getElementById('message-input');
+            var message = input.value;
+            input.value = '';
+            socket.emit('send_message', { message: message });
+        };
+    });
+</script>
+
 {% endblock %}
