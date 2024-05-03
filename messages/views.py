@@ -32,10 +32,17 @@ def rooms():
     friends = get_friends(current_user)
     return render_template('messages/rooms.html', friends=friends, generate_id=generate_id)
 
+# Connects the user to the chat room
+@socketio.on('connect')
+def handle_connect():
+    if current_user.is_authenticated:
+        emit('user_joined', {'message': f'{current_user.firstname} has joined the chat'}, broadcast=True)
+
+# Allows the user to send a message
 @socketio.on('send_message')
 def handle_message(data):
     message = data['message']
     # Broadcast the message to all connected clients
-    emit('message', {'message': message}, broadcast=True)
+    emit('message', {'message': f'{current_user.firstname}: {message}'}, broadcast=True)
 
 

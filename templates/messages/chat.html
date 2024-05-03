@@ -27,6 +27,15 @@
         margin-right: 200px;
         font-size: 20px;
     }
+    .chat-box li {
+        margin-bottom: 10px;
+    }
+    .user-message {
+        text-align: right;
+    }
+    .friend-message {
+        text-align: left;
+    }
     h2 {
         text-align: center;
         margin-top: 10px;
@@ -67,7 +76,8 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -77,7 +87,15 @@
             var messageList = document.getElementById('message-list');
             var li = document.createElement('li');
             li.innerHTML = data.message;
-            messageList.appendChild(li); // Append messages at the end
+            messageList.appendChild(li); 
+        });
+
+        // Listen for user joining the chat
+        socket.on('user_joined', function (data) {
+            var messageList = document.getElementById('message-list');
+            var li = document.createElement('li');
+            li.innerHTML = data.message;
+            messageList.appendChild(li); 
         });
 
         // Handle form submission to send messages
@@ -91,5 +109,4 @@
         };
     });
 </script>
-
 {% endblock %}
