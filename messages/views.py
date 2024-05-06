@@ -7,16 +7,6 @@ from models import User
 import hashlib
 
 messages_blueprint = Blueprint('messages', __name__, template_folder='templates')
-    
-# Function to generate unique chat room ID
-def generate_id(email1, email2):
-    # Sort the emails alphabetically to ensure consistency
-    sorted_emails = sorted([email1, email2])
-    # Concatenate the sorted emails
-    concat_emails = ''.join(sorted_emails)
-    # Generate a unique hash for the concatenated emails
-    chat_room_id = hashlib.md5(concat_emails.encode()).hexdigest()
-    return chat_room_id
 
 # Renders chat page
 @messages_blueprint.route('/chat/<friend>')
@@ -30,7 +20,7 @@ def chat(friend):
 @login_required
 def rooms():
     friends = get_friends(current_user)
-    return render_template('messages/rooms.html', friends=friends, generate_id=generate_id)
+    return render_template('messages/rooms.html', friends=friends)
 
 # Allows the user to send a message
 @socketio.on('send_message')
