@@ -82,8 +82,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var socket = io.connect('http://' + document.domain + ':' + location.port);
-
-        // Listen for messages from the server
+        var room_id = '{{ room_id }}';
+    
+        // Join the room
+        socket.on('connect', function() {
+            socket.emit('join_room', { room_id: room_id });
+        });
+    
+        // Listen for messages from the room
         socket.on('message', function (data) {
             var messageList = document.getElementById('message-list');
             var li = document.createElement('li');
@@ -95,15 +101,15 @@
             li.innerHTML = data.message;
             messageList.appendChild(li);
         });
-
-        // Listen for user joining the chat
+    
+        // Listen for user joining the room
         socket.on('user_joined', function (data) {
             var messageList = document.getElementById('message-list');
             var li = document.createElement('li');
             li.innerHTML = data.message;
-            messageList.appendChild(li); 
+            messageList.appendChild(li);
         });
-
+    
         // Handle form submission to send messages
         var form = document.getElementById('message-form');
         form.onsubmit = function (e) {
@@ -111,7 +117,12 @@
             var input = document.getElementById('message-input');
             var message = input.value;
             input.value = '';
-            socket.emit('send_message', { message: message });
+            socket.emit('send_message', { message: message, room_id: room_id });
+        };
+    
+        // Leave the room when the user navigates away
+        window.onbeforeunload = function() {
+            socket.emit('leave_room', { room_id: room_id });
         };
     });
 </script>
