@@ -18,6 +18,7 @@ def validate_password(form, password):
     if not p.match(password.data):
         raise ValidationError("Must contain at least 1 digit, 1 lowercase character, 1 uppercase character and 1 special character ")
         
+# A class for the registration form
 class RegisterForm(FlaskForm):
     email = StringField(validators=[DataRequired(), Email()])
     firstname = StringField(validators=[DataRequired(), character_check])
@@ -27,6 +28,7 @@ class RegisterForm(FlaskForm):
 
     submit = SubmitField()
     
+# A class for the login form
 class LoginForm(FlaskForm):
     email = StringField(validators=[DataRequired()])
     password = PasswordField(validators=[DataRequired()])

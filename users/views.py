@@ -8,6 +8,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
 
+#  Logs in the user
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -29,7 +30,7 @@ def login():
         
     return render_template('users/login.html', form=form)
 
-
+# Registers a new user
 @users_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     
@@ -57,7 +58,7 @@ def register():
 
     return render_template('users/register.html', form=form)
 
-
+# Logs out the user
 @users_blueprint.route('/logout')
 @login_required
 def logout():
