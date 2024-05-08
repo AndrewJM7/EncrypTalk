@@ -78,11 +78,13 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var socket = io.connect('http://' + document.domain + ':' + location.port);
         var room_id = '{{ room_id }}';
+        var key = '{{ key }}'
     
         // Join the room
         socket.on('connect', function() {
@@ -98,7 +100,16 @@
             } else {
             li.className = 'friend-message';
             }
-            var decryptedMessage = data.message;
+            
+            // Convert the ArrayBuffer to a byte array
+            var byteArray = new Uint8Array(data.message);
+            var encryptedData = '';
+            for (var i = 0; i < byteArray.length; i++) {
+                encryptedData += String.fromCharCode(byteArray[i]);
+            }
+
+            var decryptedMessage = decrypt(encryptedData, key);
+
             li.innerHTML = decryptedMessage;
             messageList.appendChild(li);
         });
@@ -125,6 +136,14 @@
         window.onbeforeunload = function() {
             socket.emit('leave_room', { room_id: room_id });
         };
+
+        // Decrypt messages
+        function decrypt(message, key) {
+            key = CryptoJS.enc.Utf8.parse(key); 
+            message = message.toString();
+            var decrypted =  CryptoJS.AES.decrypt(message, key, {mode:CryptoJS.mode.ECB});
+            return decrypted.toString(CryptoJS.enc.Utf8);
+        };        
     });
 </script>
 {% endblock %}
