@@ -94,11 +94,12 @@
             var messageList = document.getElementById('message-list');
             var li = document.createElement('li');
             if (data.sender === '{{ current_user.email }}') {
-                li.className = 'user-message';
+            li.className = 'user-message';
             } else {
-                li.className = 'friend-message';
+            li.className = 'friend-message';
             }
-            li.innerHTML = data.message;
+            var decryptedMessage = data.message;
+            li.innerHTML = decryptedMessage;
             messageList.appendChild(li);
         });
     

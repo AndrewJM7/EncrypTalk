@@ -5,8 +5,21 @@ from app import socketio
 from contacts.views import get_friends
 from models import User
 import hashlib
+from cryptography.fernet import Fernet
 
 messages_blueprint = Blueprint('messages', __name__, template_folder='templates')
+
+key = Fernet.generate_key()
+
+def encrypt_message(message):
+    fernet = Fernet(key)
+    encrypted_message = fernet.encrypt(message.encode())
+    return encrypted_message.decode()
+
+def decrypt_message(encrypted_message):
+    fernet = Fernet(key)
+    decrypted_message = fernet.decrypt(encrypted_message.encode())
+    return decrypted_message.decode()
 
 # Sort the emails to ensure a consistent room name
 def get_room_name(user1, user2):
@@ -35,7 +48,8 @@ def handle_message(data):
     message = data['message']
     room_id = data['room_id']
     sender_email = current_user.email
-    emit('message', {'message': f'{message}', 'sender': sender_email}, room=room_id)
+    encrypted_message = encrypt_message(message)
+    emit('message', {'message': encrypted_message, 'sender': sender_email}, room=room_id)
 
 # Allows the user to join a room
 @socketio.on('join_room')
