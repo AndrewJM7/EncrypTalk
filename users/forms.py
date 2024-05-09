@@ -10,13 +10,13 @@ def character_check(form, field):
     excluded_chars = "* ? ! ' ^ + % & / ( ) = } ] [ { $ # @ < >"
     for char in field.data:
         if char in excluded_chars:
-            raise ValidationError(f"Character {char} is not allowed.")
+            raise ValidationError(f"\nCharacter {char} is not allowed.")
 
 # A regex function for password validation
 def validate_password(form, password):
     p = re.compile(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)")
     if not p.match(password.data):
-        raise ValidationError("Must contain at least 1 digit, 1 lowercase character, 1 uppercase character and 1 special character ")
+        raise ValidationError("\nMust contain at least 1 digit, 1 lowercase character, 1 uppercase character and 1 special character ")
         
 # A class for the registration form
 class RegisterForm(FlaskForm):
@@ -24,7 +24,7 @@ class RegisterForm(FlaskForm):
     firstname = StringField(validators=[DataRequired(), character_check])
     lastname = StringField(validators=[DataRequired(), character_check])
     password = PasswordField(validators=[DataRequired(), Length(min=6, max=12), validate_password])
-    confirm_password = PasswordField(validators=[DataRequired(), EqualTo('password', message='Both passwords must be equal')])
+    confirm_password = PasswordField(validators=[DataRequired(), EqualTo('password', message='\nBoth passwords must be equal')])
 
     submit = SubmitField()
     

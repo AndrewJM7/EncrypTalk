@@ -21,10 +21,10 @@
         border-radius: 20px;
         box-shadow: 0 0 10px white;
         height: 55vh;
-        width: 77%;
-        overflow-y: auto; 
-        margin-left: 200px;
-        margin-right: 200px;
+        width: calc(100% - 400px); 
+        max-width: 800px; 
+        overflow-y: auto;
+        margin: 0 auto;
         font-size: 20px;
     }
     .chat-box li {
@@ -43,21 +43,27 @@
         font-size: 40px;
         text-decoration: underline;
     }
+    .input-container {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
     input {
-        width: calc(100% - 80px); 
+        width: 400px; 
         font-size: 1.2rem;
-        margin-left: 200px;
+        margin-bottom: 10px;
     }
     button {
         width: 80px; 
         padding: 8px;
         font-size: 1.2rem;
-        margin-top: 10px;
-        margin-left: 200px;
+        margin-top: 40px;
     }
     .form-container {
         display: flex;
-        justify-content: flex-end; 
+        justify-content: center; 
+        align-items: center;
+        width: 100%;
         margin-top: 10px; 
     }
 </style>
@@ -70,10 +76,12 @@
         <!-- Messages will be appended here -->
     </div>
     <div class="form-container">
-        <form id="message-form">
-            <input type="text" id="message-input" autocomplete="off">
-            <button type="submit">Send</button>
-        </form>
+        <div class="input-container">
+            <form id="message-form">
+                <input type="text" id="message-input" autocomplete="off">
+                <!--<button type="submit">Send</button> Add this for send button -->
+            </form>
+        </div>
     </div>
 </div>
 
@@ -107,6 +115,8 @@
             for (var i = 0; i < byteArray.length; i++) {
                 encryptedData += String.fromCharCode(byteArray[i]);
             }
+
+            console.log("Data Received:", encryptedData);
 
             var decryptedMessage = decrypt(encryptedData, key);
 
